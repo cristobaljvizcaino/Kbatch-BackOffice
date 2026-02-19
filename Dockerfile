@@ -45,10 +45,12 @@ RUN printf 'server {\n\
 }' > /etc/nginx/conf.d/default.conf
 
 # Script de arranque que genera config.js desde la ENV
+# Nota: usamos printenv porque el nombre tiene guión y ${VAR} no funciona bien
 RUN printf '#!/bin/sh\n\
 set -eu\n\
+CONFIG_JSON=$(printenv "IT-KBATCH_ENVIROMENTS_JSON" 2>/dev/null || echo "{}")\n\
 cat > /usr/share/nginx/html/config.js <<EOF\n\
-window.kbatch_selector_enviroments = ${IT-KBATCH_ENVIROMENTS_JSON};\n\
+window.kbatch_selector_enviroments = $CONFIG_JSON;\n\
 EOF\n' > /docker-entrypoint.d/99-generate-config.sh \
     && chmod +x /docker-entrypoint.d/99-generate-config.sh
 
