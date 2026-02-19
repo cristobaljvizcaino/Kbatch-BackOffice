@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KBATCH Dashboard</title>
+    <title>KBATCH Portal Backoffice</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -52,13 +52,13 @@
 </head>
   <body class="bg-slate-50 text-slate-800 antialiased overflow-hidden">
     <div id="root"></div>
-  <!-- =====================================================================
-       kbatch_selector_enviroments
-       Configuración de ambientes disponibles para el Portal Operativo KBATCH.
-       En producción, este bloque es reemplazado/inyectado por el pipeline de deployment.
-       ===================================================================== -->
+  <!-- 
+    Runtime config: en producción se genera /config.js desde KBATCH_ENVIROMENTS_JSON.
+    En desarrollo local, usa el fallback inline o crea public/config.js con tus ambientes de prueba.
+  -->
+  <script src="/config.js" onerror="console.warn('config.js no encontrado, usando fallback local')"></script>
   <script>
-    window.kbatch_selector_enviroments = {
+    window.kbatch_selector_enviroments = window.kbatch_selector_enviroments || {
       "PAYIN-KASHIO-D1": {
         "api_url": "https://d1-api.kashio-dev.net",
         "auth_user": "xxxxx",
