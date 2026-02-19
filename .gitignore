@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Runtime config (generado en Cloud Run, local usa copia con credenciales de dev)
+public/config.js
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -58,33 +58,9 @@
   -->
   <script src="/config.js" onerror="console.warn('config.js no encontrado, usando fallback local')"></script>
   <script>
-    window.kbatch_selector_enviroments = window.kbatch_selector_enviroments || {
-      "PAYIN-KASHIO-D1": {
-        "api_url": "https://d1-api.kashio-dev.net",
-        "auth_user": "xxxxx",
-        "auth_password": "xxxxx"
-      },
-      "PAYIN-KASHIO-D2": {
-        "api_url": "https://d2-api.kashio-dev.net",
-        "auth_user": "xxxxx",
-        "auth_password": "xxxxx"
-      },
-      "PAYIN-KASHIO-Q1": {
-        "api_url": "https://q1-api.kashio-dev.net",
-        "auth_user": "xxxxx",
-        "auth_password": "xxxxx"
-      },
-      "PAYIN-KASHIO-Q2": {
-        "api_url": "https://q2-api.kashio-dev.net",
-        "auth_user": "xxxxx",
-        "auth_password": "xxxxx"
-      },
-      "PAYIN-KASHIO-Q3": {
-        "api_url": "https://q3-api.kashio-dev.net",
-        "auth_user": "xxxxx",
-        "auth_password": "xxxxx"
-      }
-    };
+  if (!window.kbatch_selector_enviroments) {
+    console.error("No se cargó config.js o no definió kbatch_selector_enviroments");
+  }
   </script>
   <script type="module" src="/index.tsx"></script>
 </body>
