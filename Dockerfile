@@ -24,8 +24,8 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Runtime Config (una sola ENV con JSON)
 # ============================================
 # En Cloud Run/deploy, sobreescribe esta variable con el JSON de ambientes.
-# Ejemplo: KBATCH_ENVIROMENTS_JSON='{"PAYIN-KASHIO-D1":{"api_url":"https://...","auth_user":"x","auth_password":"y"}}'
-ENV KBATCH_ENVIROMENTS_JSON="{}"
+# Ejemplo: IT-KBATCH_ENVIROMENTS_JSON='{"PAYIN-KASHIO-D1":{"api_url":"https://...","auth_user":"x","auth_password":"y"}}'
+ENV IT-KBATCH_ENVIROMENTS_JSON="{}"
 
 # Configuración nginx optimizada para SPA
 RUN printf 'server {\n\
@@ -48,7 +48,7 @@ RUN printf 'server {\n\
 RUN printf '#!/bin/sh\n\
 set -eu\n\
 cat > /usr/share/nginx/html/config.js <<EOF\n\
-window.kbatch_selector_enviroments = ${KBATCH_ENVIROMENTS_JSON};\n\
+window.kbatch_selector_enviroments = ${IT-KBATCH_ENVIROMENTS_JSON};\n\
 EOF\n' > /docker-entrypoint.d/99-generate-config.sh \
     && chmod +x /docker-entrypoint.d/99-generate-config.sh
 
