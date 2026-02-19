@@ -1,0 +1,5 @@
+{
+  "name": "KBATCH Admin Dashboard",
+  "description": "A comprehensive microservices admin dashboard featuring monitoring, configuration, and architecture visualization.",
+  "requestFramePermissions": []
+}

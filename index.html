@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KBATCH Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              sidebar: '#0f172a',
+              primary: '#3b82f6',
+              success: '#22c55e',
+              warning: '#f59e0b',
+              danger: '#ef4444',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar for tables */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-slate-50 text-slate-800 antialiased overflow-hidden">
+    <div id="root"></div>
+  <!-- =====================================================================
+       kbatch_selector_enviroments
+       Configuración de ambientes disponibles para el Portal Operativo KBATCH.
+       En producción, este bloque es reemplazado/inyectado por el pipeline de deployment.
+       ===================================================================== -->
+  <script>
+    window.kbatch_selector_enviroments = {
+      "PAYIN-KASHIO-D1": {
+        "api_url": "https://d1-api.kashio-dev.net",
+        "auth_user": "xxxxx",
+        "auth_password": "xxxxx"
+      },
+      "PAYIN-KASHIO-D2": {
+        "api_url": "https://d2-api.kashio-dev.net",
+        "auth_user": "xxxxx",
+        "auth_password": "xxxxx"
+      },
+      "PAYIN-KASHIO-Q1": {
+        "api_url": "https://q1-api.kashio-dev.net",
+        "auth_user": "xxxxx",
+        "auth_password": "xxxxx"
+      },
+      "PAYIN-KASHIO-Q2": {
+        "api_url": "https://q2-api.kashio-dev.net",
+        "auth_user": "xxxxx",
+        "auth_password": "xxxxx"
+      },
+      "PAYIN-KASHIO-Q3": {
+        "api_url": "https://q3-api.kashio-dev.net",
+        "auth_user": "xxxxx",
+        "auth_password": "xxxxx"
+      }
+    };
+  </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
