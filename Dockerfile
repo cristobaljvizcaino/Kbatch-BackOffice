@@ -21,11 +21,11 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # ============================================
-# Runtime Config (una sola ENV con JSON)
+# Runtime Config (ENVs inyectadas en Cloud Run)
 # ============================================
-# En Cloud Run/deploy, sobreescribe esta variable con el JSON de ambientes.
-# Ejemplo: IT-KBATCH_ENVIROMENTS_JSON='{"PAYIN-KASHIO-D1":{"api_url":"https://...","auth_user":"x","auth_password":"y"}}'
 ENV IT-KBATCH_ENVIROMENTS_JSON="{}"
+ENV IT-KBATCH_MSAL_CLIENT_ID=""
+ENV IT-KBATCH_MSAL_AUTHORITY=""
 
 # Configuración nginx optimizada para SPA
 RUN printf 'server {\n\
@@ -44,13 +44,16 @@ RUN printf 'server {\n\
     }\n\
 }' > /etc/nginx/conf.d/default.conf
 
-# Script de arranque que genera config.js desde la ENV
-# Nota: usamos printenv porque el nombre tiene guión y ${VAR} no funciona bien
+# Script de arranque que genera config.js desde las ENVs
+# Nota: usamos printenv porque los nombres tienen guión y ${VAR} no funciona bien
 RUN printf '#!/bin/sh\n\
 set -eu\n\
-CONFIG_JSON=$(printenv "IT-KBATCH_ENVIROMENTS_JSON" 2>/dev/null || echo "{}")\n\
+ENV_JSON=$(printenv "IT-KBATCH_ENVIROMENTS_JSON" 2>/dev/null || echo "{}")\n\
+CLIENT_ID=$(printenv "IT-KBATCH_MSAL_CLIENT_ID" 2>/dev/null || echo "")\n\
+AUTHORITY=$(printenv "IT-KBATCH_MSAL_AUTHORITY" 2>/dev/null || echo "")\n\
 cat > /usr/share/nginx/html/config.js <<EOF\n\
-window.kbatch_selector_enviroments = $CONFIG_JSON;\n\
+window.kbatch_selector_enviroments = $ENV_JSON;\n\
+window.kbatch_msal_config = {"clientId":"$CLIENT_ID","authority":"$AUTHORITY"};\n\
 EOF\n' > /docker-entrypoint.d/99-generate-config.sh \
     && chmod +x /docker-entrypoint.d/99-generate-config.sh
 

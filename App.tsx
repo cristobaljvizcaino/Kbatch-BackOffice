@@ -12,6 +12,7 @@ import {
 import { View, NavItem } from './types';
 import { EnvironmentProvider } from './components/EnvironmentContext';
 import EnvironmentSelector from './components/EnvironmentSelector';
+import UserAvatar from './components/UserAvatar';
 import Architecture from './components/Architecture';
 import Configuration from './components/Configuration';
 import UserManagement from './components/UserManagement';
@@ -162,9 +163,7 @@ const App: React.FC = () => {
              </div>
              <div className="h-4 w-[1px] bg-slate-600"></div>
              <Bell className="h-4 w-4 text-slate-400 hover:text-white cursor-pointer" />
-             <div className="h-8 w-8 rounded bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-xs font-bold text-white cursor-pointer">
-                A
-             </div>
+             <UserAvatar />
           </div>
         </header>
 
