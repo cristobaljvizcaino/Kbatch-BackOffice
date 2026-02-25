@@ -768,8 +768,27 @@ const SyncUserModal: React.FC<SyncUserModalProps> = ({ onClose, onSuccess, showT
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="text-sm font-medium text-slate-700 mb-1 flex items-center gap-1.5">
               Public ID del Usuario *
+              <div className="relative group/tip">
+                <HelpCircle className="h-3.5 w-3.5 text-slate-400 hover:text-blue-500 cursor-help transition-colors" />
+                <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-72 p-3 bg-slate-800 text-white text-xs rounded-lg shadow-xl opacity-0 invisible group-hover/tip:opacity-100 group-hover/tip:visible transition-all duration-200 z-50 pointer-events-none">
+                  <p className="font-semibold mb-1.5">¿Qué valor puedo usar?</p>
+                  <p className="text-slate-300 leading-relaxed">Puedes usar cualquier identificador que te resulte fácil de recordar. No necesita ser un UUID técnico:</p>
+                  <div className="mt-2 space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">✓</span>
+                      <span>Simple: <span className="font-mono bg-slate-700 px-1.5 py-0.5 rounded">juanperez</span></span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">✓</span>
+                      <span>UUID: <span className="font-mono bg-slate-700 px-1.5 py-0.5 rounded">usr_d1_9Pp...</span></span>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-slate-400 border-t border-slate-700 pt-2">Este identificador es el que usarás para los procesos de importación y exportación.</p>
+                  <div className="absolute right-full top-1/2 -translate-y-1/2 border-[6px] border-transparent border-r-slate-800"></div>
+                </div>
+              </div>
             </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -780,7 +799,7 @@ const SyncUserModal: React.FC<SyncUserModalProps> = ({ onClose, onSuccess, showT
                 className={`w-full pl-9 pr-4 py-2 border rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white text-slate-900 placeholder-slate-400 ${
                   errors.userPublicId ? 'border-red-300' : 'border-slate-300'
                 }`}
-                placeholder="Ej: usr_d1_9PpNyjMTXpCGAgwe4F28VX"
+                placeholder="Ej: juanperez o usr_d1_9PpNyjMTX..."
               />
             </div>
             {errors.userPublicId && <p className="text-red-500 text-xs mt-1">{errors.userPublicId}</p>}
@@ -822,8 +841,27 @@ const SyncUserModal: React.FC<SyncUserModalProps> = ({ onClose, onSuccess, showT
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="text-sm font-medium text-slate-700 mb-1 flex items-center gap-1.5">
               Company ID (Organización) *
+              <div className="relative group/tip2">
+                <HelpCircle className="h-3.5 w-3.5 text-slate-400 hover:text-blue-500 cursor-help transition-colors" />
+                <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-72 p-3 bg-slate-800 text-white text-xs rounded-lg shadow-xl opacity-0 invisible group-hover/tip2:opacity-100 group-hover/tip2:visible transition-all duration-200 z-50 pointer-events-none">
+                  <p className="font-semibold mb-1.5">¿Qué valor puedo usar?</p>
+                  <p className="text-slate-300 leading-relaxed">Puedes usar un nombre que identifique a la organización. No necesita ser un UUID:</p>
+                  <div className="mt-2 space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">✓</span>
+                      <span>Nombre: <span className="font-mono bg-slate-700 px-1.5 py-0.5 rounded">empresaxyz</span></span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">✓</span>
+                      <span>UUID: <span className="font-mono bg-slate-700 px-1.5 py-0.5 rounded">org_kashio_123</span></span>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-slate-400 border-t border-slate-700 pt-2">Lo importante es que sea consistente para agrupar usuarios de la misma organización.</p>
+                  <div className="absolute right-full top-1/2 -translate-y-1/2 border-[6px] border-transparent border-r-slate-800"></div>
+                </div>
+              </div>
             </label>
             <div className="relative">
               <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -834,7 +872,7 @@ const SyncUserModal: React.FC<SyncUserModalProps> = ({ onClose, onSuccess, showT
                 className={`w-full pl-9 pr-4 py-2 border rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none bg-white text-slate-900 placeholder-slate-400 ${
                   errors.companyId ? 'border-red-300' : 'border-slate-300'
                 }`}
-                placeholder="Ej: org_kashio_123"
+                placeholder="Ej: empresaxyz o org_kashio_123"
               />
             </div>
             {errors.companyId && <p className="text-red-500 text-xs mt-1">{errors.companyId}</p>}
