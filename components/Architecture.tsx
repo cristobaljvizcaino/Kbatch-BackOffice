@@ -63,7 +63,7 @@ const Architecture: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabId>('cloud');
 
   return (
-    <div className="p-8 max-w-[1600px] mx-auto h-full overflow-y-auto">
+    <div className="p-4 md:p-8 max-w-[1600px] mx-auto h-full overflow-y-auto">
       <h2 className="text-xl font-bold text-slate-800 mb-6">Arquitectura del Sistema</h2>
 
       {/* Tabs */}

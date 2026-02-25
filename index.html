@@ -4,40 +4,72 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KBATCH Portal Backoffice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
-              sidebar: '#0f172a',
-              primary: '#3b82f6',
-              success: '#22c55e',
-              warning: '#f59e0b',
-              danger: '#ef4444',
-            }
+              brand: {
+                50:  '#EFF6FF',
+                100: '#DBEAFE',
+                200: '#BFDBFE',
+                300: '#93C5FD',
+                400: '#60A5FA',
+                500: '#0666EB',
+                600: '#0553C7',
+                700: '#0444A3',
+                800: '#033580',
+                900: '#022660',
+              },
+              sidebar: {
+                DEFAULT: '#0B1628',
+                hover:   '#131F35',
+                footer:  '#070E1B',
+                border:  'rgba(255,255,255,0.06)',
+              },
+              topbar: {
+                DEFAULT: '#0F1A2E',
+                border:  'rgba(255,255,255,0.06)',
+              },
+              primary:   '#0666EB',
+              success:   '#10B981',
+              warning:   '#F59E0B',
+              danger:    '#EF4444',
+              info:      '#06B6D4',
+            },
+            fontFamily: {
+              display: ['"Red Hat Display"', 'Inter', 'system-ui', 'sans-serif'],
+              body:    ['Inter', '"Red Hat Display"', 'system-ui', 'sans-serif'],
+            },
+            spacing: {
+              '18': '4.5rem',
+              '78': '19.5rem',
+            },
+            width: {
+              'sidebar': '312px',
+              'sidebar-collapsed': '72px',
+            },
+            height: {
+              'topbar': '72px',
+            },
+            borderRadius: {
+              'kds': '8px',
+            },
+            boxShadow: {
+              'focus-ring': '0 0 0 3px rgba(6, 102, 235, 0.15)',
+              'sidebar': '4px 0 24px rgba(0, 0, 0, 0.15)',
+            },
           }
         }
       }
     </script>
-    <style>
-      /* Custom scrollbar for tables */
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: #f1f5f9;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 3px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-      }
-    </style>
-  <script type="importmap">
+    <link rel="stylesheet" href="/index.css">
+    <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.4",
@@ -48,14 +80,9 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-slate-50 text-slate-800 antialiased overflow-hidden">
+  <body class="antialiased overflow-hidden">
     <div id="root"></div>
-  <!-- 
-    Runtime config: en producción se genera /config.js desde KBATCH_ENVIROMENTS_JSON.
-    En desarrollo local, usa el fallback inline o crea public/config.js con tus ambientes de prueba.
-  -->
   <script src="/config.js" onerror="console.warn('config.js no encontrado, usando fallback local')"></script>
   <script>
   if (!window.kbatch_selector_enviroments) {

@@ -1835,22 +1835,22 @@ const ProcessTypeList: React.FC<ProcessTypeListProps> = ({
         {filtered.map((item) => (
           <div 
             key={item.publicId} 
-            className={`bg-white p-6 rounded-lg shadow-sm border-l-4 border hover:shadow-md transition-shadow ${
+            className={`bg-white p-4 sm:p-6 rounded-lg shadow-sm border-l-4 border hover:shadow-md transition-shadow ${
               item.type === 1 
                 ? 'border-l-blue-500 border-slate-200' 
                 : 'border-l-green-500 border-slate-200'
             }`}
           >
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4">
-                <div className={`p-3 rounded-lg h-fit ${
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
+              <div className="flex gap-3 sm:gap-4 min-w-0 flex-1">
+                <div className={`p-2.5 sm:p-3 rounded-lg h-fit flex-shrink-0 ${
                   item.type === 1 ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'
                 }`}>
-                  {item.type === 1 ? <Upload className="h-6 w-6" /> : <Download className="h-6 w-6" />}
+                  {item.type === 1 ? <Upload className="h-5 w-5 sm:h-6 sm:w-6" /> : <Download className="h-5 w-5 sm:h-6 sm:w-6" />}
                 </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-bold text-lg text-slate-800">{item.name}</h3>
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1">
+                    <h3 className="font-bold text-base sm:text-lg text-slate-800 break-words">{item.name}</h3>
                     {/* Badge de tipo Import/Export */}
                     <div className="relative group inline-block">
                       <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide cursor-help ${
@@ -1963,48 +1963,27 @@ const ProcessTypeList: React.FC<ProcessTypeListProps> = ({
 
       {/* Pagination */}
       {pagination && pagination.totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 bg-white p-4 rounded-lg border border-slate-200">
-          {/* Ir a primera página */}
-          <button
-            onClick={() => onPageChange(1)}
-            disabled={currentPage <= 1}
-            className="px-3 py-2 border border-slate-300 rounded text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50"
-            title="Ir a página 1"
-          >
-            « Primera
-          </button>
-          {/* Página anterior */}
+        <div className="flex items-center justify-between sm:justify-center gap-2 bg-white p-3 sm:p-4 rounded-lg border border-slate-200">
           <button
             onClick={() => onPageChange(Math.max(1, currentPage - 1))}
             disabled={currentPage <= 1}
-            className="px-4 py-2 border border-slate-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50"
+            className="px-3 sm:px-4 py-2 border border-slate-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50"
           >
-            ‹ Anterior
+            <span className="hidden sm:inline">‹ </span>Anterior
           </button>
-          {/* Indicador de página */}
-          <div className="flex items-center gap-2 px-4">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4">
             <span className="text-sm text-slate-500">Página</span>
-            <span className="px-3 py-1 bg-blue-600 text-white rounded font-bold text-sm min-w-[40px] text-center">
+            <span className="px-2.5 sm:px-3 py-1 bg-blue-600 text-white rounded font-bold text-sm min-w-[36px] text-center">
               {currentPage}
             </span>
             <span className="text-sm text-slate-500">de {pagination.totalPages}</span>
           </div>
-          {/* Página siguiente */}
           <button
             onClick={() => onPageChange(Math.min(pagination.totalPages, currentPage + 1))}
             disabled={currentPage >= pagination.totalPages}
-            className="px-4 py-2 border border-slate-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50"
+            className="px-3 sm:px-4 py-2 border border-slate-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50"
           >
-            Siguiente ›
-          </button>
-          {/* Ir a última página */}
-          <button
-            onClick={() => onPageChange(pagination.totalPages)}
-            disabled={currentPage >= pagination.totalPages}
-            className="px-3 py-2 border border-slate-300 rounded text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50"
-            title={`Ir a página ${pagination.totalPages}`}
-          >
-            Última »
+            Siguiente<span className="hidden sm:inline"> ›</span>
           </button>
         </div>
       )}
@@ -2083,27 +2062,27 @@ const ProcessTypeDetail: React.FC<ProcessTypeDetailProps> = ({ publicId, onBack,
       </button>
 
       <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-6 border-b border-slate-200 flex justify-between items-start">
-          <div className="flex gap-4">
-            <div className={`p-3 rounded-lg h-fit ${
+        <div className="p-4 sm:p-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start gap-3">
+          <div className="flex gap-3 sm:gap-4 min-w-0">
+            <div className={`p-2.5 sm:p-3 rounded-lg h-fit flex-shrink-0 ${
               data.type === 1 ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'
             }`}>
-              {data.type === 1 ? <Upload className="h-6 w-6" /> : <Download className="h-6 w-6" />}
+              {data.type === 1 ? <Upload className="h-5 w-5 sm:h-6 sm:w-6" /> : <Download className="h-5 w-5 sm:h-6 sm:w-6" />}
             </div>
-            <div>
-              <h2 className="text-xl font-bold text-slate-800">{data.name}</h2>
-              <p className="text-slate-500 mt-1">{data.description}</p>
+            <div className="min-w-0">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-800 break-words">{data.name}</h2>
+              <p className="text-slate-500 mt-1 text-sm">{data.description}</p>
             </div>
           </div>
           <button 
             onClick={() => onEdit(data)} 
-            className="px-3 py-1.5 border border-slate-300 rounded text-slate-600 text-sm font-medium hover:bg-slate-50 flex items-center"
+            className="px-3 py-1.5 border border-slate-300 rounded text-slate-600 text-sm font-medium hover:bg-slate-50 flex items-center flex-shrink-0"
           >
             <Edit className="h-4 w-4 mr-2" /> Editar
           </button>
         </div>
 
-        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {/* Información General */}
           <div>
             <h3 className="font-bold text-slate-800 mb-4 flex items-center">
@@ -2698,7 +2677,8 @@ const ProcessTypeWizard: React.FC<ProcessTypeWizardProps> = ({
   if (isJsonMode) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white p-8 rounded-lg shadow-lg border border-slate-200">
+        <div className="bg-white p-4 sm:p-8 rounded-lg shadow-lg border border-slate-200">
+
           <div className="flex justify-between items-start mb-6">
             <div>
               <h3 className="text-lg font-bold text-slate-800 flex items-center">
@@ -2921,7 +2901,7 @@ const ProcessTypeWizard: React.FC<ProcessTypeWizardProps> = ({
     <div className="max-w-4xl mx-auto">
       {renderSteps()}
 
-      <div className="bg-white p-8 rounded-lg shadow-lg border border-slate-200 min-h-[400px]">
+      <div className="bg-white p-4 sm:p-8 rounded-lg shadow-lg border border-slate-200 min-h-[400px]">
         {/* Step 1: Basic Info */}
         {step === 1 && (
           <div className="space-y-6">
@@ -3642,7 +3622,7 @@ const Configuration: React.FC<ConfigurationProps> = ({ initialProcessId, onClear
   };
 
   return (
-    <div className="p-8 max-w-[1600px] mx-auto min-h-full bg-slate-50">
+    <div className="p-4 md:p-8 max-w-[1600px] mx-auto min-h-full bg-slate-50">
       {/* Toast */}
       {toast && (
         <Toast 

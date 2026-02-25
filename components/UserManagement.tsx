@@ -1326,7 +1326,7 @@ const UserManagement: React.FC<UserManagementProps> = ({ isActive }) => {
   };
 
   return (
-    <div className="p-8 max-w-[1600px] mx-auto min-h-full bg-slate-50">
+    <div className="p-4 md:p-8 max-w-[1600px] mx-auto min-h-full bg-slate-50">
       {/* Toast */}
       {toast && (
         <Toast 

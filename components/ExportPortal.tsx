@@ -824,7 +824,7 @@ const ExportPortal: React.FC<ExportPortalProps> = ({ onNavigate, isActive }) => 
   // RENDERIZADO
   // =============================================================================
   return (
-    <div className="p-8 max-w-6xl mx-auto">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-8 flex justify-between items-start">
         <div>

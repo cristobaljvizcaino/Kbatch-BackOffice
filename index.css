@@ -1,0 +1,748 @@
+/* ============================================================================
+   KBATCH UI FOUNDATION — Design System Tokens & Base Styles
+   B2B SaaS Multi-Product Platform
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================================================
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   ============================================================================ */
+
+:root {
+  --color-primary: #0666EB;
+  --color-primary-hover: #0553C7;
+  --color-primary-light: #E8F1FD;
+  --color-primary-50: #EFF6FF;
+  --color-primary-100: #DBEAFE;
+  --color-primary-200: #BFDBFE;
+  --color-primary-300: #93C5FD;
+  --color-primary-400: #60A5FA;
+  --color-primary-500: #0666EB;
+  --color-primary-600: #0553C7;
+  --color-primary-700: #0444A3;
+  --color-primary-800: #033580;
+  --color-primary-900: #022660;
+
+  --color-success: #10B981;
+  --color-success-light: #D1FAE5;
+  --color-success-hover: #059669;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-warning-hover: #D97706;
+  --color-danger: #EF4444;
+  --color-danger-light: #FEE2E2;
+  --color-danger-hover: #DC2626;
+  --color-info: #06B6D4;
+  --color-info-light: #CFFAFE;
+
+  --color-white: #FFFFFF;
+  --color-gray-25: #FCFCFD;
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1F2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #030712;
+
+  --sidebar-bg: #0B1628;
+  --sidebar-bg-hover: #131F35;
+  --sidebar-bg-active: rgba(6, 102, 235, 0.08);
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-text: #94A3B8;
+  --sidebar-text-hover: #E2E8F0;
+  --sidebar-text-active: var(--color-primary);
+  --sidebar-width: 312px;
+  --sidebar-width-collapsed: 72px;
+  --sidebar-footer-bg: #070E1B;
+
+  --topbar-bg: #0F1A2E;
+  --topbar-height: 72px;
+  --topbar-border: rgba(255, 255, 255, 0.06);
+  --topbar-text: #CBD5E1;
+
+  --surface-bg: #F1F5F9;
+  --surface-card: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-overlay: rgba(0, 0, 0, 0.5);
+
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-tertiary: #9CA3AF;
+  --text-disabled: #D1D5DB;
+  --text-inverse: #FFFFFF;
+  --text-link: var(--color-primary);
+
+  --border-default: #E5E7EB;
+  --border-hover: #D1D5DB;
+  --border-focus: var(--color-primary);
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-full: 9999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --font-family-display: 'Red Hat Display', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-body: 'Inter', 'Red Hat Display', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --font-size-xs: 0.6875rem;
+  --font-size-sm: 0.75rem;
+  --font-size-base: 0.8125rem;
+  --font-size-md: 0.875rem;
+  --font-size-lg: 1rem;
+  --font-size-xl: 1.125rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-focus: 0 0 0 3px rgba(6, 102, 235, 0.15);
+  --shadow-focus-danger: 0 0 0 3px rgba(239, 68, 68, 0.15);
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --z-sidebar: 40;
+  --z-topbar: 30;
+  --z-dropdown: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+}
+
+/* ============================================================================
+   2. DARK MODE TOKENS
+   ============================================================================ */
+
+body.dark {
+  --surface-bg: #0B1120;
+  --surface-card: #111827;
+  --surface-elevated: #1F2937;
+  --surface-overlay: rgba(0, 0, 0, 0.7);
+  --text-primary: #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --text-tertiary: #6B7280;
+  --text-disabled: #374151;
+  --border-default: #1F2937;
+  --border-hover: #374151;
+  --color-primary-light: rgba(6, 102, 235, 0.15);
+  --color-success-light: rgba(16, 185, 129, 0.15);
+  --color-warning-light: rgba(245, 158, 11, 0.15);
+  --color-danger-light: rgba(239, 68, 68, 0.15);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================================
+   3. GLOBAL RESETS & BASE
+   ============================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  background-color: var(--surface-bg);
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+/* ============================================================================
+   4. LAYOUT — Sidebar
+   ============================================================================ */
+
+.kds-sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  transition: width var(--transition-slow), min-width var(--transition-slow);
+  z-index: var(--z-sidebar);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.kds-sidebar.collapsed {
+  width: var(--sidebar-width-collapsed);
+  min-width: var(--sidebar-width-collapsed);
+}
+
+.kds-sidebar__logo {
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-6);
+  border-bottom: 1px solid var(--sidebar-border);
+  flex-shrink: 0;
+}
+
+.kds-sidebar__logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--border-radius-md);
+  background: linear-gradient(135deg, var(--color-primary), #0444A3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(6, 102, 235, 0.3);
+}
+
+.kds-sidebar__logo-text {
+  margin-left: var(--space-3);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.kds-sidebar__logo-title {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  color: var(--color-white);
+  letter-spacing: 0.05em;
+}
+
+.kds-sidebar__logo-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+  letter-spacing: 0.02em;
+}
+
+.kds-sidebar__section-label {
+  padding: var(--space-6) var(--space-6) var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.kds-sidebar__nav {
+  flex: 1;
+  padding: var(--space-4) 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.kds-sidebar__nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-6);
+  height: 44px;
+  color: var(--sidebar-text);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  background: none;
+  text-align: left;
+  position: relative;
+  gap: var(--space-3);
+  white-space: nowrap;
+}
+
+.kds-sidebar__nav-item:hover {
+  color: var(--sidebar-text-hover);
+  background: var(--sidebar-bg-hover);
+}
+
+.kds-sidebar__nav-item.active {
+  color: var(--sidebar-text-active);
+  background: var(--sidebar-bg-active);
+}
+
+.kds-sidebar__nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--color-primary);
+}
+
+.kds-sidebar__nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.kds-sidebar__nav-item.active .kds-sidebar__nav-icon {
+  opacity: 1;
+  color: var(--color-primary);
+}
+
+.kds-sidebar__footer {
+  border-top: 1px solid var(--sidebar-border);
+  background: var(--sidebar-footer-bg);
+  flex-shrink: 0;
+}
+
+.kds-sidebar__user {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  gap: var(--space-3);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.kds-sidebar__user:hover {
+  background: var(--sidebar-bg-hover);
+}
+
+.kds-sidebar__user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-full);
+  background: linear-gradient(135deg, var(--color-primary), #0444A3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(6, 102, 235, 0.25);
+}
+
+.kds-sidebar__user-info {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.kds-sidebar__user-name {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kds-sidebar__user-email {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================================
+   5. LAYOUT — Topbar
+   ============================================================================ */
+
+.kds-topbar {
+  height: var(--topbar-height);
+  min-height: var(--topbar-height);
+  background: var(--topbar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  border-bottom: 1px solid var(--topbar-border);
+  z-index: var(--z-topbar);
+  flex-shrink: 0;
+}
+
+.kds-topbar__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.kds-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.kds-topbar__toggle {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-md);
+  color: var(--topbar-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.kds-topbar__toggle:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-white);
+}
+
+.kds-topbar__divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.kds-topbar__icon-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-md);
+  color: var(--topbar-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.kds-topbar__icon-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-white);
+}
+
+.kds-topbar__icon-btn .badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--color-danger);
+  border-radius: var(--border-radius-full);
+  border: 2px solid var(--topbar-bg);
+}
+
+/* ============================================================================
+   6. LAYOUT — Breadcrumb
+   ============================================================================ */
+
+.kds-breadcrumb {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-8);
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.kds-breadcrumb__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  font-size: var(--font-size-sm);
+}
+
+.kds-breadcrumb__item {
+  color: var(--text-tertiary);
+}
+
+.kds-breadcrumb__item a,
+.kds-breadcrumb__item button {
+  color: inherit;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 2px 4px;
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.kds-breadcrumb__item a:hover,
+.kds-breadcrumb__item button:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.kds-breadcrumb__item.current {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.kds-breadcrumb__separator {
+  color: var(--text-disabled);
+  font-size: var(--font-size-xs);
+  user-select: none;
+}
+
+/* ============================================================================
+   7. COMPONENT — Buttons
+   ============================================================================ */
+
+.kds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-4);
+  height: 36px;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--border-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1;
+}
+
+.kds-btn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+.kds-btn:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+.kds-btn--primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+.kds-btn--primary:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: 0 2px 8px rgba(6, 102, 235, 0.3);
+}
+
+.kds-btn--secondary {
+  background: var(--color-white);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+.kds-btn--secondary:hover {
+  background: var(--color-gray-50);
+  border-color: var(--border-hover);
+}
+
+.kds-btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+.kds-btn--ghost:hover {
+  background: var(--color-gray-100);
+  color: var(--text-primary);
+}
+
+.kds-btn--danger {
+  background: var(--color-danger);
+  color: var(--color-white);
+  border-color: var(--color-danger);
+}
+.kds-btn--danger:hover {
+  background: var(--color-danger-hover);
+  border-color: var(--color-danger-hover);
+}
+.kds-btn--danger:focus-visible { box-shadow: var(--shadow-focus-danger); }
+
+.kds-btn--icon { width: 36px; padding: 0; }
+.kds-btn--sm { height: 32px; padding: 0 var(--space-3); font-size: var(--font-size-sm); }
+.kds-btn--lg { height: 44px; padding: 0 var(--space-6); font-size: var(--font-size-md); }
+
+/* ============================================================================
+   8. COMPONENT — Cards
+   ============================================================================ */
+
+.kds-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-xs);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+.kds-card:hover { box-shadow: var(--shadow-sm); }
+.kds-card--interactive:hover { border-color: var(--border-hover); box-shadow: var(--shadow-md); cursor: pointer; }
+.kds-card__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4); }
+.kds-card__title { font-family: var(--font-family-display); font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+.kds-card__subtitle { font-size: var(--font-size-sm); color: var(--text-tertiary); margin-top: var(--space-1); }
+
+/* ============================================================================
+   9. COMPONENT — Input Fields
+   ============================================================================ */
+
+.kds-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--space-3);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+.kds-input::placeholder { color: var(--text-tertiary); }
+.kds-input:hover { border-color: var(--border-hover); }
+.kds-input:focus { border-color: var(--color-primary); box-shadow: var(--shadow-focus); }
+.kds-input:disabled { background: var(--color-gray-50); color: var(--text-disabled); cursor: not-allowed; }
+.kds-input--error { border-color: var(--color-danger); }
+.kds-input--error:focus { box-shadow: var(--shadow-focus-danger); }
+
+.kds-label { display: block; font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--text-secondary); margin-bottom: var(--space-1); }
+.kds-input-helper { font-size: var(--font-size-xs); color: var(--text-tertiary); margin-top: var(--space-1); }
+.kds-input-helper--error { color: var(--color-danger); }
+
+/* ============================================================================
+   10. COMPONENT — Badges
+   ============================================================================ */
+
+.kds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius-full);
+  line-height: 1.4;
+}
+.kds-badge--primary { background: var(--color-primary-light); color: var(--color-primary); }
+.kds-badge--success { background: var(--color-success-light); color: var(--color-success); }
+.kds-badge--warning { background: var(--color-warning-light); color: var(--color-warning); }
+.kds-badge--danger  { background: var(--color-danger-light);  color: var(--color-danger);  }
+.kds-badge--neutral { background: var(--color-gray-100); color: var(--text-secondary); }
+
+/* ============================================================================
+   11. SCROLLBARS
+   ============================================================================ */
+
+.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--color-gray-300); border-radius: 3px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--color-gray-400); }
+
+.dark-scrollbar::-webkit-scrollbar { width: 4px; }
+.dark-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.dark-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 2px; }
+.dark-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* ============================================================================
+   12. UTILITIES & ANIMATIONS
+   ============================================================================ */
+
+.kds-animate-fade-in { animation: kds-fade-in var(--transition-normal) ease-out; }
+@keyframes kds-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================================
+   13. RESPONSIVE
+   ============================================================================ */
+
+.kds-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--surface-overlay);
+  z-index: calc(var(--z-sidebar) - 1);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+.kds-sidebar-overlay.visible { opacity: 1; }
+
+@media (max-width: 1024px) {
+  .kds-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    transition: transform var(--transition-slow);
+    box-shadow: var(--shadow-xl);
+  }
+  .kds-sidebar.open {
+    transform: translateX(0);
+  }
+  .kds-sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+  .kds-sidebar.collapsed.open {
+    transform: translateX(0);
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+  }
+  .kds-sidebar-overlay { display: block; }
+  .kds-breadcrumb { padding: 0 var(--space-4); }
+  .kds-topbar { height: 56px; min-height: 56px; }
+}
+
+@media (max-width: 640px) {
+  .kds-sidebar { width: 280px; min-width: 280px; }
+  .kds-topbar { padding: 0 var(--space-3); height: 56px; min-height: 56px; }
+  .kds-topbar__right { gap: var(--space-2); }
+  .kds-breadcrumb {
+    height: 40px;
+    padding: 0 var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+  .kds-breadcrumb__list {
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+}
+
+@media print {
+  .kds-sidebar, .kds-topbar, .kds-breadcrumb { display: none !important; }
+}

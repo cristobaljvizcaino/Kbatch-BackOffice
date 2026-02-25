@@ -9,5 +9,11 @@ export enum View {
 export interface NavItem {
   id: View;
   label: string;
-  icon: any; // Using Lucide icons
+  icon: any;
+  section?: string;
+}
+
+export interface BreadcrumbItem {
+  label: string;
+  view?: View;
 }

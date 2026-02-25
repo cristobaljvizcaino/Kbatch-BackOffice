@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { 
   Cloud, 
   Activity,
   Menu,
   Bell,
+  ChevronRight,
   UserCog,
   FileUp,
   FileDown,
-  Cog
+  Cog,
+  PanelLeftClose,
+  PanelLeft,
+  X
 } from 'lucide-react';
-import { View, NavItem } from './types';
+import { View, NavItem, BreadcrumbItem } from './types';
 import { EnvironmentProvider } from './components/EnvironmentContext';
 import EnvironmentSelector from './components/EnvironmentSelector';
 import UserAvatar from './components/UserAvatar';
@@ -19,21 +23,36 @@ import UserManagement from './components/UserManagement';
 import ImportPortal from './components/ImportPortal';
 import ExportPortal from './components/ExportPortal';
 
+const NAV_SECTIONS = {
+  OPERATIONS: 'Operaciones',
+  SETTINGS: 'Configuración',
+  DOCS: 'Documentación',
+} as const;
+
 const NAV_ITEMS: NavItem[] = [
-  // Módulos Principales
-  { id: View.USER_MANAGEMENT, label: 'Gestión de Usuarios y Procesos', icon: UserCog },
-  { id: View.IMPORT_PORTAL, label: 'Importar Archivos', icon: FileUp },
-  { id: View.EXPORT_PORTAL, label: 'Exportar Archivos', icon: FileDown },
-  
-  // Configuración
-  { id: View.CONFIGURATION, label: 'Configuración de Procesos', icon: Cog },
-  
-  // Documentación Técnica
-  { id: View.ARCHITECTURE, label: 'Arquitectura del Sistema', icon: Cloud },
+  { id: View.USER_MANAGEMENT, label: 'Gestión de Usuarios y Procesos', icon: UserCog, section: NAV_SECTIONS.OPERATIONS },
+  { id: View.IMPORT_PORTAL, label: 'Importar Archivos', icon: FileUp, section: NAV_SECTIONS.OPERATIONS },
+  { id: View.EXPORT_PORTAL, label: 'Exportar Archivos', icon: FileDown, section: NAV_SECTIONS.OPERATIONS },
+  { id: View.CONFIGURATION, label: 'Configuración de Procesos', icon: Cog, section: NAV_SECTIONS.SETTINGS },
+  { id: View.ARCHITECTURE, label: 'Arquitectura del Sistema', icon: Cloud, section: NAV_SECTIONS.DOCS },
 ];
 
-// Componente wrapper que mantiene el componente hijo montado pero oculto cuando no está activo
-// Esto preserva el estado del componente al cambiar de vista (evita remontarlo)
+const VIEW_LABELS: Record<View, string> = {
+  [View.USER_MANAGEMENT]: 'Gestión de Usuarios y Procesos',
+  [View.IMPORT_PORTAL]: 'Importar Archivos',
+  [View.EXPORT_PORTAL]: 'Exportar Archivos',
+  [View.CONFIGURATION]: 'Configuración de Procesos',
+  [View.ARCHITECTURE]: 'Arquitectura del Sistema',
+};
+
+const SECTION_LABELS: Record<View, string> = {
+  [View.USER_MANAGEMENT]: 'Operaciones',
+  [View.IMPORT_PORTAL]: 'Operaciones',
+  [View.EXPORT_PORTAL]: 'Operaciones',
+  [View.CONFIGURATION]: 'Configuración',
+  [View.ARCHITECTURE]: 'Documentación',
+};
+
 interface ViewWrapperProps {
   viewId: View;
   currentView: View;
@@ -52,139 +71,176 @@ const ViewWrapper: React.FC<ViewWrapperProps> = ({ viewId, currentView, children
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>(View.USER_MANAGEMENT);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  
-  // Estado para pasar un processId específico a Configuration
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [configProcessId, setConfigProcessId] = useState<string | null>(null);
 
-  // Función helper para navegación desde componentes hijos
-  // Puede recibir un objeto con view y processId para navegar a un proceso específico
-  const handleNavigate = (view: string | View, processId?: string) => {
-    console.log('handleNavigate called with:', view, processId);
-    
-    // Si es un string con formato "CONFIGURATION:processId", parsearlo
+  const handleNavigate = useCallback((view: string | View, processId?: string) => {
     if (typeof view === 'string' && view.startsWith('CONFIGURATION:')) {
       const id = view.split(':')[1];
       setConfigProcessId(id);
       setCurrentView(View.CONFIGURATION);
       return;
     }
-    
-    // Si se pasa processId directamente
     if (processId && (view === 'CONFIGURATION' || view === View.CONFIGURATION)) {
       setConfigProcessId(processId);
       setCurrentView(View.CONFIGURATION);
       return;
     }
-    
     setCurrentView(view as View);
-  };
+  }, []);
 
-  // Limpiar el processId después de que Configuration lo use
-  const clearConfigProcessId = () => {
+  const clearConfigProcessId = useCallback(() => {
     setConfigProcessId(null);
-  };
+  }, []);
+
+  const handleViewChange = useCallback((view: View) => {
+    setCurrentView(view);
+    setMobileMenuOpen(false);
+  }, []);
+
+  const breadcrumbs: BreadcrumbItem[] = useMemo(() => [
+    { label: 'KBATCH' },
+    { label: SECTION_LABELS[currentView] },
+    { label: VIEW_LABELS[currentView] },
+  ], [currentView]);
+
+  const groupedNav: [string, NavItem[]][] = useMemo(() => {
+    const groups: Record<string, NavItem[]> = {};
+    NAV_ITEMS.forEach((item) => {
+      const section = item.section || 'General';
+      if (!groups[section]) groups[section] = [];
+      groups[section].push(item);
+    });
+    return Object.entries(groups);
+  }, []);
 
   return (
     <EnvironmentProvider>
-    <div className="flex h-screen w-full bg-slate-50 font-sans">
-      {/* Sidebar */}
-      <aside 
-        className={`${sidebarOpen ? 'w-64' : 'w-20'} flex flex-col bg-[#0f172a] text-slate-300 transition-all duration-300 shadow-xl z-20 flex-shrink-0`}
-      >
-        {/* Logo Area */}
-        <div className="h-16 flex items-center px-6 border-b border-slate-700/50">
-          <Activity className="h-6 w-6 text-blue-500 mr-3 flex-shrink-0" />
+    <div className="flex h-screen w-full font-body" style={{ background: 'var(--surface-bg)' }}>
+
+      {mobileMenuOpen && (
+        <div 
+          className="kds-sidebar-overlay visible lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* SIDEBAR */}
+      <aside className={`kds-sidebar ${!sidebarOpen ? 'collapsed' : ''} ${mobileMenuOpen ? 'open' : ''}`}>
+        <div className="kds-sidebar__logo">
+          <div className="kds-sidebar__logo-icon">
+            <Activity className="h-4 w-4 text-white" />
+          </div>
           {sidebarOpen && (
-            <div>
-              <h1 className="font-bold text-white text-lg tracking-wide">KBATCH</h1>
-              <span className="text-xs text-slate-500">v1.1.0.2</span>
+            <div className="kds-sidebar__logo-text">
+              <div className="kds-sidebar__logo-title">KBATCH</div>
+              <div className="kds-sidebar__logo-subtitle">Backoffice Portal</div>
             </div>
           )}
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 py-6 space-y-1 overflow-y-auto custom-scrollbar">
-          {NAV_ITEMS.map((item) => {
-            const isActive = currentView === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => setCurrentView(item.id)}
-                className={`w-full flex items-center px-6 py-3 transition-colors duration-200 relative
-                  ${isActive 
-                    ? 'bg-blue-600/10 text-blue-400 border-r-4 border-blue-500' 
-                    : 'hover:bg-slate-800/50 hover:text-white border-r-4 border-transparent'
-                  }`}
-              >
-                <item.icon className={`h-5 w-5 ${isActive ? 'text-blue-500' : 'text-slate-400'} flex-shrink-0`} />
-                {sidebarOpen && <span className="ml-3 font-medium text-sm">{item.label}</span>}
-              </button>
-            );
-          })}
+        <nav className="kds-sidebar__nav dark-scrollbar">
+          {groupedNav.map(([section, items]) => (
+            <div key={section}>
+              {sidebarOpen && (
+                <div className="kds-sidebar__section-label">{section}</div>
+              )}
+              {!sidebarOpen && <div style={{ height: '16px' }} />}
+              {items.map((item) => {
+                const isActive = currentView === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleViewChange(item.id)}
+                    className={`kds-sidebar__nav-item ${isActive ? 'active' : ''}`}
+                    title={!sidebarOpen ? item.label : undefined}
+                  >
+                    <item.icon className="kds-sidebar__nav-icon" />
+                    {sidebarOpen && <span>{item.label}</span>}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
         </nav>
 
-        {/* Footer Status */}
-        <div className="p-4 border-t border-slate-700/50 bg-[#0b1120]">
-          {sidebarOpen ? (
-            <div className="space-y-2">
-              <div className="flex items-center text-xs">
-                <span className="w-16 text-slate-500">Sistema:</span>
-                <span className="text-green-500 font-bold">EN LÍNEA</span>
-              </div>
-              <div className="flex items-center text-xs">
-                <span className="w-16 text-slate-500">Región:</span>
-                <span className="text-blue-400">aws-us-east-1</span>
-              </div>
+        <div className="kds-sidebar__footer">
+          {sidebarOpen && (
+            <div className="px-6 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid var(--sidebar-border)' }}>
+              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: 'var(--color-success)' }} />
+              <span className="text-xs" style={{ color: 'var(--color-gray-500)' }}>Sistema en línea</span>
+              <span className="ml-auto text-xs" style={{ color: 'var(--color-primary)' }}>v1.1.0.2</span>
             </div>
-          ) : (
-             <div className="flex justify-center">
-                <div className="w-2 h-2 rounded-full bg-green-500"></div>
-             </div>
           )}
+          <UserAvatar variant={sidebarOpen ? 'sidebar' : 'collapsed'} />
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col h-screen overflow-hidden">
-        {/* Top Header */}
-        <header className="h-14 bg-[#1e293b] text-white flex items-center justify-between px-6 shadow-sm z-10 flex-shrink-0">
-          <div className="flex items-center">
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="mr-4 text-slate-400 hover:text-white">
-              <Menu className="h-5 w-5" />
+      {/* MAIN CONTENT */}
+      <div className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
+
+        {/* TOPBAR */}
+        <header className="kds-topbar">
+          <div className="kds-topbar__left">
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="kds-topbar__toggle lg:hidden"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+            <button 
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="kds-topbar__toggle hidden lg:flex"
+              title={sidebarOpen ? 'Colapsar menú' : 'Expandir menú'}
+            >
+              {sidebarOpen ? <PanelLeftClose className="h-5 w-5" /> : <PanelLeft className="h-5 w-5" />}
             </button>
           </div>
-          
-          <div className="flex items-center space-x-4">
-             {/* Selector de Ambiente */}
-             <EnvironmentSelector />
-             <div className="h-4 w-[1px] bg-slate-600"></div>
-             <div className="flex items-center text-slate-400 hover:text-white cursor-pointer">
-                <span className="text-xs mr-1">EN</span>
-             </div>
-             <div className="h-4 w-[1px] bg-slate-600"></div>
-             <Bell className="h-4 w-4 text-slate-400 hover:text-white cursor-pointer" />
-             <UserAvatar />
+          <div className="kds-topbar__right">
+            <EnvironmentSelector />
+            <div className="kds-topbar__divider" />
+            <button className="kds-topbar__icon-btn" title="Notificaciones">
+              <Bell className="h-[18px] w-[18px]" />
+              <span className="badge"></span>
+            </button>
           </div>
         </header>
 
-        {/* Content Body - Todos los componentes permanecen montados para preservar estado */}
-        <main className="flex-1 overflow-auto bg-slate-100 relative">
-          {/* Gestión de Usuarios */}
+        {/* BREADCRUMB */}
+        <div className="kds-breadcrumb">
+          <ol className="kds-breadcrumb__list">
+            {breadcrumbs.map((crumb, index) => (
+              <React.Fragment key={index}>
+                {index > 0 && (
+                  <li className="kds-breadcrumb__separator">
+                    <ChevronRight className="h-3 w-3" />
+                  </li>
+                )}
+                <li className={`kds-breadcrumb__item ${index === breadcrumbs.length - 1 ? 'current' : ''}`}>
+                  {crumb.view ? (
+                    <button onClick={() => handleViewChange(crumb.view!)}>
+                      {crumb.label}
+                    </button>
+                  ) : (
+                    <span>{crumb.label}</span>
+                  )}
+                </li>
+              </React.Fragment>
+            ))}
+          </ol>
+        </div>
+
+        {/* CONTENT */}
+        <main className="flex-1 overflow-auto relative" style={{ background: 'var(--surface-bg)' }}>
           <ViewWrapper viewId={View.USER_MANAGEMENT} currentView={currentView}>
             <UserManagement isActive={currentView === View.USER_MANAGEMENT} />
           </ViewWrapper>
-
-          {/* Portal de Importación */}
           <ViewWrapper viewId={View.IMPORT_PORTAL} currentView={currentView}>
             <ImportPortal onNavigate={handleNavigate} isActive={currentView === View.IMPORT_PORTAL} />
           </ViewWrapper>
-
-          {/* Portal de Exportación */}
           <ViewWrapper viewId={View.EXPORT_PORTAL} currentView={currentView}>
             <ExportPortal onNavigate={handleNavigate} isActive={currentView === View.EXPORT_PORTAL} />
           </ViewWrapper>
-
-          {/* Configuración de Procesos */}
           <ViewWrapper viewId={View.CONFIGURATION} currentView={currentView}>
             <Configuration 
               initialProcessId={configProcessId} 
@@ -192,12 +248,9 @@ const App: React.FC = () => {
               isActive={currentView === View.CONFIGURATION}
             />
           </ViewWrapper>
-
-          {/* Arquitectura del Sistema */}
           <ViewWrapper viewId={View.ARCHITECTURE} currentView={currentView}>
             <Architecture />
           </ViewWrapper>
-
         </main>
       </div>
     </div>
